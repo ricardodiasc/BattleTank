@@ -9,7 +9,9 @@ void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
 	ATank* Tank = GetControlledTank();
 
-	if (Tank)
+
+	//If you came because of the post. this was the error
+	if (!Tank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No tank for you..."));
 	}
@@ -22,7 +24,9 @@ void ATankPlayerController::BeginPlay() {
 
 ATank* ATankPlayerController::GetControlledTank() const{
 	APawn* TempPawn = GetControlledPawn();
-	if (TempPawn) {
+
+	//If you came because of the post. this was the error
+	if (!TempPawn) {
 		UE_LOG(LogTemp, Error, TEXT("No Pawn for you..."));
 	}
 	else {
