@@ -19,19 +19,9 @@ void ATankPlayerController::BeginPlay() {
 		UE_LOG(LogTemp, Warning, TEXT("Tank Posessed : %s"), *Tank->GetName());
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Begin play called"));
 }
 
 ATank* ATankPlayerController::GetControlledTank() const{
-	APawn* TempPawn = GetControlledPawn();
-
-	//If you came because of the post. this was the error
-	if (!TempPawn) {
-		UE_LOG(LogTemp, Error, TEXT("No Pawn for you..."));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("PAWN FOUND!!!"));
-	}
 	
 	return Cast<ATank>(GetPawn());
 }
