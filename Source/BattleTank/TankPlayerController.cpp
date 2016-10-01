@@ -16,7 +16,7 @@ void ATankPlayerController::BeginPlay() {
 		UE_LOG(LogTemp, Error, TEXT("No tank for you..."));
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Tank Posessed : %s"), *Tank->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Tank POSSUIDO!!! : %s"), *Tank->GetName());
 	}
 
 }
