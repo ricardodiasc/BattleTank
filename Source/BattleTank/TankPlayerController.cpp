@@ -8,7 +8,7 @@
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
 	ATank* Tank = GetControlledTank();
-
+	IsTickWorking = false;
 
 	//If you came because of the post. this was the error
 	if (!Tank)
@@ -24,4 +24,16 @@ void ATankPlayerController::BeginPlay() {
 ATank* ATankPlayerController::GetControlledTank() const{
 	
 	return Cast<ATank>(GetPawn());
+}
+
+void ATankPlayerController::Tick(float DeltaSeconds) {
+	Super::Tick(DeltaSeconds);
+	AimTowardsCrosshair();
+}
+
+//Tick
+void ATankPlayerController::AimTowardsCrosshair() {
+	if (!GetControlledTank()) return;
+
+	//TODO NExt
 }

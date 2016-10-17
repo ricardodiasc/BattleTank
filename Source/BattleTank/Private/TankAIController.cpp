@@ -9,16 +9,16 @@
 void ATankAIController::BeginPlay() {
 	UE_LOG(LogTemp, Warning, TEXT("Begin play AI Controller"));
 	
-	ATank* Tank = GetControlledTankAI();
+	ATank* ThisTank = GetControlledTankAI();
 	ATank* PlayerTank = GetPlayerControlled();
 
-	if (!Tank)
+	if (!ThisTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No AI Tank for you..."));
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AI tank : %s"), *Tank->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("AI tank : %s"), *ThisTank->GetName());
 	}
 
 	if (!PlayerTank) {
