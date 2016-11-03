@@ -36,14 +36,14 @@ void ATankPlayerController::AimTowardsCrosshair() {
 
 	FVector HitLocation = FVector(0);
 
-//	if (GetSightRayHitLocation(HitLocation)) {
-//		GetControlledTank()->AimAt(HitLocation);
-//	}
+	if (GetSightRayHitLocation(HitLocation)) {
+		GetControlledTank()->AimAt(HitLocation);
+	}
 
 	
 }
 
-
+//Tick
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const {
 	int32 ViewportSizeX, ViewportSizeY;
 
@@ -79,8 +79,8 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector& LookDirection, FVe
 
 bool ATankPlayerController::GetLookDirection2D(FVector2D ScreenLocation, FVector& LookDirection) const{
 	//To be discarted
-	FVector WorldLocation;
+	FVector CameraWorldLocation;
 
-	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, WorldLocation, LookDirection);
+	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection);
 	
 }
