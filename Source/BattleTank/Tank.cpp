@@ -23,6 +23,9 @@ void ATank::BeginPlay()
 void ATank::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+	//Get player location
+
+	
 
 }
 
@@ -33,3 +36,8 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 }
 
+void ATank::AimAt(FVector HitLocation) {
+	auto ThisTank = GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s aiming at : %s"), *ThisTank, *HitLocation.ToString());
+
+}

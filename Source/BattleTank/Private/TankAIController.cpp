@@ -10,8 +10,7 @@ void ATankAIController::BeginPlay() {
 	UE_LOG(LogTemp, Warning, TEXT("Begin play AI Controller"));
 	
 	ATank* ThisTank = GetControlledTankAI();
-	ATank* PlayerTank = GetPlayerControlled();
-
+	
 	if (!ThisTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No AI Tank for you..."));
@@ -21,12 +20,6 @@ void ATankAIController::BeginPlay() {
 		UE_LOG(LogTemp, Warning, TEXT("AI tank : %s"), *ThisTank->GetName());
 	}
 
-	if (!PlayerTank) {
-		UE_LOG(LogTemp, Error, TEXT("AI not found player...."));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("AI Found player :%s"), *PlayerTank->GetName());
-	}
 }
 
 ATank* ATankAIController::GetControlledTankAI()
@@ -34,7 +27,7 @@ ATank* ATankAIController::GetControlledTankAI()
 	return Cast<ATank>(GetPawn());
 }
 
-ATank * ATankAIController::GetPlayerControlled()
+ATank* ATankAIController::GetPlayerControlled()
 {
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 	ATank* PlayerTank = nullptr;
@@ -44,6 +37,14 @@ ATank * ATankAIController::GetPlayerControlled()
 	return PlayerTank;
 }
 
+void ATankAIController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+	UE_LOG(LogTemp, Warning, TEXT("Tank AI Tick"));
+	if (GetPlayerControlled()) {
+		GetControlledTankAI()->AimAt(GetPlayerControlled()->GetActorLocation());
+	}
+	
+}
 
 
 
