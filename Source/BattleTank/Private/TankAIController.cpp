@@ -5,11 +5,14 @@
 
 
 ATankAIController::ATankAIController() {
-	PrimaryActorTick.bCanEverTick = true;
-	PrimaryActorTick.bStartWithTickEnabled = true;
+	
 }
 
 void ATankAIController::BeginPlay() {
+
+	Super::BeginPlay();
+	//PrimaryActorTick.bCanEverTick = true;
+
 	UE_LOG(LogTemp, Warning, TEXT("Begin play AI Controller"));
 	
 	ATank* ThisTank = GetControlledTankAI();
@@ -58,7 +61,7 @@ ATank* ATankAIController::GetPlayerTank()
 void ATankAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	UE_LOG(LogTemp, Warning, TEXT("AI is ticking..."));
+	//UE_LOG(LogTemp, Warning, TEXT("AI is ticking..."));
 	if (GetPlayerTank()) {
 
 		GetControlledTankAI()->AimAt(GetPlayerTank()->GetActorLocation());
