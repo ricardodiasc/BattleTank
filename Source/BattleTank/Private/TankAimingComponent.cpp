@@ -46,12 +46,18 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed) {
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	FVector EndLocation = HitLocation;
 	FCollisionResponseParams ResponseParam;
+
+	auto Time = GetWorld()->GetTimeSeconds();
+
 	TArray <AActor*> ActorsToIgnore;
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, EndLocation, LauchSpeed, false, 0.0f, false, ESuggestProjVelocityTraceOption::TraceFullPath, ResponseParam, ActorsToIgnore, true)) {
+	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, EndLocation, LauchSpeed, false, 0.0f, 0.0f, ESuggestProjVelocityTraceOption::DoNotTrace, ResponseParam, ActorsToIgnore, true)) {
 		FVector Direction = OutLaunchVelocity.GetSafeNormal();
 		//UE_LOG(LogTemp, Warning, TEXT("%s Direction Velocity = %s"), *ThisTank, *Direction.ToString());
-
 		MoveBarrel(Direction);
+		UE_LOG(LogTemp, Warning, TEXT("%f - aim found at %s"), Time, *Direction.ToString() )
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("%f - NOT FOUND"), Time);
 	}
 
 }
