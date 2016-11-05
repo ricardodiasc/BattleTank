@@ -1,6 +1,7 @@
 
 
 #include "BattleTank.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -48,14 +49,14 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed) {
 	TArray <AActor*> ActorsToIgnore;
 	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, EndLocation, LauchSpeed, false, 0.0f, false, ESuggestProjVelocityTraceOption::TraceFullPath, ResponseParam, ActorsToIgnore, true)) {
 		FVector Direction = OutLaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("%s Direction Velocity = %s"), *ThisTank, *Direction.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("%s Direction Velocity = %s"), *ThisTank, *Direction.ToString());
 
 		MoveBarrel(Direction);
 	}
 
 }
 
-void UTankAimingComponent::SetBarrel(UStaticMeshComponent* Barrel) {
+void UTankAimingComponent::SetBarrel(UTankBarrel* Barrel) {
 	this->Barrel = Barrel;
 }
 
@@ -65,7 +66,7 @@ void UTankAimingComponent::MoveBarrel(FVector Direction) {
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimToRotator = Direction.Rotation();
 	FRotator DiferenceRotator = BarrelRotator - AimToRotator;
-
+	Barrel->Elevation(0.5f);
 	//Move the right ammount in given time
 	//given max elevation and frame time
 	//TODO To finish latter....;

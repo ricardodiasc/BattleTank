@@ -35,5 +35,5 @@ public:
 	void ATank::AimAt(FVector HitLocation);
 	
 	UFUNCTION(BlueprintCallable, Category="Setup")
-	void SetBarrelReference(UStaticMeshComponent* Barrel);
+	void SetBarrelReference(UTankBarrel* Barrel);
 };
