@@ -50,7 +50,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed) {
 	auto Time = GetWorld()->GetTimeSeconds();
 
 	TArray <AActor*> ActorsToIgnore;
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, EndLocation, LauchSpeed, false, 0.0f, 0.0f, ESuggestProjVelocityTraceOption::DoNotTrace, ResponseParam, ActorsToIgnore, true)) {
+	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, EndLocation, LauchSpeed, false, 0.0f, 0.0f, ESuggestProjVelocityTraceOption::DoNotTrace, ResponseParam, ActorsToIgnore, false)) {
 		FVector Direction = OutLaunchVelocity.GetSafeNormal();
 		//UE_LOG(LogTemp, Warning, TEXT("%s Direction Velocity = %s"), *ThisTank, *Direction.ToString());
 		MoveBarrel(Direction);
@@ -69,10 +69,12 @@ void UTankAimingComponent::SetBarrel(UTankBarrel* Barrel) {
 
 void UTankAimingComponent::MoveBarrel(FVector Direction) {
 	if (!Barrel) return;
+
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimToRotator = Direction.Rotation();
-	FRotator DiferenceRotator = BarrelRotator - AimToRotator;
-	Barrel->Elevation(0.5f);
+	auto AimAsRotator = Direction.Rotation();
+	FRotator DiferenceRotator = AimAsRotator - BarrelRotator;
+	Barrel->Elevation(DiferenceRotator.Pitch);
+	
 	//Move the right ammount in given time
 	//given max elevation and frame time
 	//TODO To finish latter....;
