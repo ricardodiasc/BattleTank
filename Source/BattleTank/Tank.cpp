@@ -36,3 +36,7 @@ void ATank::AimAt(FVector HitLocation) {
 void ATank::SetBarrelReference(UTankBarrel* Barrel) {
 	TankAimingComponent->SetBarrel(Barrel);
 }
+
+void ATank::SetTurretReference(UTankTurret* Turret) {
+	TankAimingComponent->SetTurret(Turret);
+}
