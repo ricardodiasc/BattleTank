@@ -24,7 +24,7 @@ public:
 	ATank();
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
-	float LauchSpeed = 1000000.0f; // TODO: Define ideal default 
+	float LauchSpeed = 8000.0f; // TODO: Define ideal default 
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -39,4 +39,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Setup")
 	void SetTurretReference(UTankTurret* Turrent);
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void Fire();
+
 };
