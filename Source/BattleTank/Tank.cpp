@@ -2,6 +2,8 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "TankBarrel.h"
+#include "Projectile.h"
 #include "Tank.h"
 
 
@@ -12,6 +14,8 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("AimingComponnent"));
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -21,20 +25,13 @@ void ATank::BeginPlay()
 	
 }
 
-
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
-{
-	Super::SetupPlayerInputComponent(InputComponent);
-
-}
-
 void ATank::AimAt(FVector HitLocation) {
 	TankAimingComponent->AimAt(HitLocation, LauchSpeed);
 }
 
 void ATank::SetBarrelReference(UTankBarrel* Barrel) {
 	TankAimingComponent->SetBarrel(Barrel);
+	this->Barrel = Barrel;
 }
 
 void ATank::SetTurretReference(UTankTurret* Turret) {
@@ -43,5 +40,21 @@ void ATank::SetTurretReference(UTankTurret* Turret) {
 
 void ATank::Fire() {
 	UE_LOG(LogTemp, Warning, TEXT("FIRE !!!"));
+
+	if (!Barrel) {
+		UE_LOG(LogTemp, Error, TEXT("No Barrel set on TANK"));
+		return;
+	}
+
+	if (!ProjectileBlueprint) {
+		UE_LOG(LogTemp, Error, TEXT("No ProjectileBlueprint for this TANK"));
+		return;
+	}
+
+	FVector Location = Barrel->GetSocketLocation(FName("Projectile"));
+	FRotator Rotation = Barrel->GetSocketRotation(FName("Projectile"));
+
+	FActorSpawnParameters SpawnParameters; // To Discart....
+	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,Location,Rotation, SpawnParameters);
 
 }

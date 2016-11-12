@@ -7,7 +7,8 @@
 #include "Tank.generated.h"
 
 class UTankAimingComponent;
-
+class UTankBarrel;
+class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -17,6 +18,7 @@ class BATTLETANK_API ATank : public APawn
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+	
 
 public:
 
@@ -29,9 +31,6 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
-	
 	void ATank::AimAt(FVector HitLocation);
 	
 	UFUNCTION(BlueprintCallable, Category="Setup")
@@ -42,5 +41,13 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void Fire();
+
+private:
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	UTankBarrel* Barrel;
+
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
+	
 
 };
