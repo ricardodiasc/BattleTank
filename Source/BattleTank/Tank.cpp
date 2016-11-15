@@ -39,7 +39,6 @@ void ATank::SetTurretReference(UTankTurret* Turret) {
 }
 
 void ATank::Fire() {
-	UE_LOG(LogTemp, Warning, TEXT("FIRE !!!"));
 
 	if (!Barrel) {
 		UE_LOG(LogTemp, Error, TEXT("No Barrel set on TANK"));
@@ -55,6 +54,7 @@ void ATank::Fire() {
 	FRotator Rotation = Barrel->GetSocketRotation(FName("Projectile"));
 
 	FActorSpawnParameters SpawnParameters; // To Discart....
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,Location,Rotation, SpawnParameters);
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,Location,Rotation, SpawnParameters);
 
+	Projectile->LauchProjectile(LauchSpeed);
 }
