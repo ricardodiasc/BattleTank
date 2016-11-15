@@ -21,10 +21,6 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 	
-	ATank* GetControlledTankAI();
-	
-	ATank* GetPlayerTank();
-	
 	void BeginPlay() override;
 	
 };

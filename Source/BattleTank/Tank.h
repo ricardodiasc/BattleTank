@@ -50,4 +50,9 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 	
 
+	float LastTimeFire = 0.0f;
+
+	double ReloadTimeInSeconds = 3.0;
+
+
 };

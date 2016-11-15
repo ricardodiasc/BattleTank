@@ -50,11 +50,16 @@ void ATank::Fire() {
 		return;
 	}
 
-	FVector Location = Barrel->GetSocketLocation(FName("Projectile"));
-	FRotator Rotation = Barrel->GetSocketRotation(FName("Projectile"));
+	bool isReloaded = (FPlatformTime::Seconds() - LastTimeFire) > ReloadTimeInSeconds;
 
-	FActorSpawnParameters SpawnParameters; // To Discart....
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,Location,Rotation, SpawnParameters);
+	if (Barrel && isReloaded) {
+		FVector Location = Barrel->GetSocketLocation(FName("Projectile"));
+		FRotator Rotation = Barrel->GetSocketRotation(FName("Projectile"));
 
-	Projectile->LauchProjectile(LauchSpeed);
+		FActorSpawnParameters SpawnParameters; // To Discart....
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,Location,Rotation, SpawnParameters);
+
+		Projectile->LauchProjectile(LauchSpeed);
+		LastTimeFire = FPlatformTime::Seconds();
+	}
 }
